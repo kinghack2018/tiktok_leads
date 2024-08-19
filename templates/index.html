@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>TikTok 可签约主播列表</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .table-responsive {
+            width: 100%;
+        }
+
+        .table th, .table td {
+            white-space: nowrap;
+        }
+
+        .container {
+            width: 100%; /* 改为100%宽度以适应宽屏幕 */
+            margin: 0 auto;
+        }
+
+        .table a {
+            color: #000; /* 设置链接颜色为黑色 */
+            text-decoration: none; /* 去掉默认的下划线 */
+        }
+
+        .table a:hover {
+            color: #007bff; /* 悬停时改为蓝色 */
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-4 mb-4">TikTok 可签约主播列表</h2>
+    <p>此页面的TikTok主播已经通过工会相关接口验证，确认可用，且主播数据均为实时更新。如对签约主播的相关技术或实时数据感兴趣，一起深入讨论。微信：kinghack</p>
+    <p>数据更新时间: {{ task_update_time }}</p>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>地区</th>
+                <th>更新时间</th>
+                <th>主播</th>
+                <th>粉丝数</th>
+                <th>视频数</th>
+                <th>总点赞数</th>
+                <th>直播间在线人数</th>
+                <th>直播间打赏数</th>
+                <th>直播间点赞数</th>
+                <th>签名</th>
+                <th>社交主页</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for host in results %}
+                <tr>
+                    <td>{{ host.region_name }}</td>
+                    <td>{{ host.user_create_time }}</td>
+                    <td>
+                        <a href="#" onclick="openTikTokLink('{{ host.user_profile_link }}')" target="_blank" class="d-flex align-items-center">
+                            <img src="{{ host.avatar_thumb }}" alt="主播头像" width="50" height="50" class="me-3">
+                            <strong>{{ host.nickname }}</strong>
+                        </a>
+                    </td>
+                    <td>{{ host.followers_count }}</td>
+                    <td>{{ host.video_count }}</td>
+                    <td>{{ host.heart_count }}</td>
+                    <td>{{ host.person_count }}</td>
+                    <td>{{ host.live_score }}</td>
+                    <td>{{ host.like_count }}</td>
+                    <td>{{ host.signature }}</td>
+                    <td><a href="{{ host.bio_link }}" target="_blank">社交主页</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="mt-4">
+    </footer>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/popper.js/2.11.8/cjs/popper.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+<script>
+    function openTikTokLink(link) {
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+            window.location.href = 'tiktok://' + link;
+        } else {
+            window.location.href = link;
+        }
+    }
+</script>
